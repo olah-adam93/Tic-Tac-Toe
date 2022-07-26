@@ -63,12 +63,12 @@ function bot(runBot) {
       if (element.childElementCount == 0) {
         //if span has no any child element
         array.push(index); //inserting unclicked or unselected boxes inside array means that span has no children
-        console.log(index + '' + 'has no children');
+        //console.log(index + '' + 'has no children');
       }
     });
-    console.log(array);
+    //console.log(array);
     let randomBox = array[Math.floor(Math.random() * array.length)]; //getting random index from array so bot will select random unselected box
-    console.log(randomBox);
+    //console.log(randomBox);
 
     if (array.length > 0) {
       if (players.classList.contains('player')) {
