@@ -19,13 +19,11 @@ window.onload = () => {
 selectBtnX.onclick = () => {
   selectBox.classList.add('hide');
   playBoard.classList.add('show'); //show the playboard section on playerX button clicked
-  wonText.setAttribute('id', 'X');
 };
 selectBtnO.onclick = () => {
   selectBox.classList.add('hide');
   playBoard.classList.add('show'); //show the playboard section on playerO button clicked
   players.setAttribute('class', 'players active player');
-  wonText.setAttribute('id', 'O');
 };
 
 let playerXIcon = 'fas fa-times', //class name of fontawesome cross icon
@@ -43,8 +41,8 @@ function clickedBox(element) {
     element.setAttribute('id', playerSign);
   } else {
     element.innerHTML = `<i class="${playerXIcon}"></i>`; //adding cross icon tag inside user clicked element
-    players.classList.add('active');
     element.setAttribute('id', playerSign);
+    players.classList.add('active');
   }
   selectWinner();
   element.style.pointerEvents = 'none'; //once user select any box then that box can't be selected again
@@ -60,7 +58,7 @@ function clickedBox(element) {
 function bot(runBot) {
   let array = []; //empty array... I'll store unselected box index in this array
   if (runBot) {
-    playerSign = 'X';
+    playerSign = 'O';
     allBox.forEach((element, index) => {
       if (element.childElementCount == 0) {
         //if span has no any child element
@@ -76,11 +74,12 @@ function bot(runBot) {
       if (players.classList.contains('player')) {
         playerSign = 'X';
         allBox[randomBox].innerHTML = `<i class="${playerXIcon}"></i>`; //adding cross icon tag inside user clicked element
-        players.classList.add('active');
         allBox[randomBox].setAttribute('id', playerSign);
+        players.classList.add('active');
       } else {
         allBox[randomBox].innerHTML = `<i class="${playerOIcon}"></i>`; //adding circle icon tag inside user clicked element
         players.classList.remove('active');
+        allBox[randomBox].setAttribute('id', playerSign);
       }
       selectWinner();
     }
@@ -119,39 +118,31 @@ function selectWinner() {
     bot(runBot);
     setTimeout(() => {
       //we'll delay to show result box
-      playBoard.classList.remove('show');
       resultBox.classList.add('show');
+      playBoard.classList.remove('show');
     }, 680); //680 ms delay
 
-    if (wonText.id === playerSign) {
-      wonText.innerHTML = `Congrats!You won the game!🥇
-      `;
-    } else {
-      wonText.innerHTML = `You lost.. maybe next time!💥
-      `;
-    }
-  } else {
+    wonText.innerHTML = `<p>Player ${playerSign} won the game!🥇</p>`;
+  } else if (
+    getId(1) != '' &&
+    getId(2) != '' &&
+    getId(3) != '' &&
+    getId(4) != '' &&
+    getId(5) != '' &&
+    getId(6) != '' &&
+    getId(7) != '' &&
+    getId(8) != '' &&
+    getId(9) != ''
+  ) {
     //if match has drawn
-    if (
-      getId(1) != '' &&
-      getId(2) != '' &&
-      getId(3) != '' &&
-      getId(4) != '' &&
-      getId(5) != '' &&
-      getId(6) != '' &&
-      getId(7) != '' &&
-      getId(8) != '' &&
-      getId(9) != ''
-    ) {
-      runBot = false;
-      bot(runBot);
-      setTimeout(() => {
-        //we'll delay to show result box
-        playBoard.classList.remove('show');
-        resultBox.classList.add('show');
-      }, 680); //680 ms delay
-      wonText.textContent = `The game has been drawn!`;
-    }
+    runBot = false;
+    bot(runBot);
+    setTimeout(() => {
+      //we'll delay to show result box
+      resultBox.classList.add('show');
+      playBoard.classList.remove('show');
+    }, 680); //680 ms delay
+    wonText.innerHTML = `<p>The game has been drawn!🎉</p>`;
   }
 }
 
